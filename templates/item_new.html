@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>New Item</h1>
+<form action="#" method = 'post'>
+	<input type ='text' size='30' name='p_id' placeholder = "Product Id" required>
+	<br>
+	<input type ='text' size='30' name='p_name' placeholder = "Product Name" required>
+	<br>
+	<input type ='text' size='30' name='weave' placeholder = "weave">
+	<br>
+	<input type ='text' size='30' name='composition' placeholder = "composition">
+	<br>
+	<input type ='text' size='30' name='color' placeholder = "color">
+	<br>
+	<input type ='text' size='30' name='category1' placeholder = "category1">
+	<br>
+	<input type ='text' size='30' name='category2' placeholder = "category2">
+	<br>
+	<input type ='text' size='30' name='category3' placeholder = "category3">
+	<br>
+    <input type='submit' value='Create'>
+</form>
+<a href='{{url_for('showVendor', vendor_id=vendor )}}'>
+    <button>Cancel</button>
+</a>
+{% endblock %}

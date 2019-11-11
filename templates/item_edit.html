@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1> Edit Item </h1>
+<form action="#" method = 'post'>
+	<input type ='text' size='30' name='p_id' value = "{{item.product_id}}" required>
+	<br>
+	<input type ='text' size='30' name='p_name' value = "{{item.product_name}}" required>
+	<br>
+	<input type ='text' size='30' name='weave' value = "{{item.weave}}">
+	<br>
+	<input type ='text' size='30' name='composition' value = "{{item.composition}}">
+	<br>
+	<input type ='text' size='30' name='color' value = "{{item.color}}">
+	<br>
+	<input type ='text' size='30' name='category1' value = "{{item.category_1}}">
+	<br>
+	<input type ='text' size='30' name='category2' value = "{{item.category_1}}">
+	<br>
+	<input type ='text' size='30' name='category3' value = "{{item.category_1}}">
+	<br>
+    <input type='submit' value='Edit'>
+	<a href='{{url_for('showVendor', vendor_id=vendor )}}'>
+	    <button>Cancel</button>
+	</a>
+</form>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<body>
+    <div class="form">
+        <form class="form-inline" name= "subscribe" method="post" role = "form">
+            <div class="form-group text-left">
+                <input type="text" class="name form-control" name="user_name" id="user_name" placeholder="Name*">
+                <input type="password" class="password form-control" name="password" id="password" placeholder="Password*">
+            </div>
+            <button class="btn btn request" id="signinButton">SignIn</button>
+        </form>
+    </div>
+    <div id="result"></div>
+    <script>
+        $('#signinButton').click(function () {
+            event.preventDefault();
+            // Hide the sign-in button now that the user is authorized
+            $('#signinButton').attr('style', 'display:none');
+            // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
+            var inputData = {
+                "user_name"  : $('input[name=user_name]').val(),
+                "password"  : $('input[name=password]').val(),
+            };            
+            $.ajax({
+                type: 'POST',
+                url: '/verifyLogin',
+                data: JSON.stringify(inputData),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    // Handle or verify the server response if necessary.
+                    if (result['login'] == 'pass') {
+                        $('#result').html('Login Successful!</br>Redirecting...');
+                        setTimeout(function () {
+                            window.location.href = "/";
+                        }, 1000);
+                    } else if(result['login'] == 'fail') {
+                        $('#result').html('Login failed!</br> please try again </br>Redirecting...');
+                        setTimeout(function () {
+                            window.location.href = "/";
+                        }, 2000);
+                    }
+                    else {
+                        $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+                    }
+                }
+            });
+        })
+    </script>
+</body>
+
+{% endblock %}

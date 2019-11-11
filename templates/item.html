@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+{% if items !=[] %}
+    <a href="{{url_for('newItem', vendor_id = vendor )}}">
+        <button>Create New Item</button>
+    </a>
+    <div style="margin-top: 40px">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">P ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Weave</th>
+              <th scope="col">Composition</th>
+              <th scope="col">Color</th>
+              <th scope="col">Category 1</th>
+              <th scope="col">Category 2</th>
+              <th scope="col">Category 3</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in items %}
+                <tr>
+                    <td>{{i.product_id}}</td>
+                    <td>{{i.product_name}}</td>
+                    <td>{{i.weave}}</td>
+                    <td>{{i.composition}}</td>
+                    <td>{{i.color}}</td>
+                    <td>{{i.category_1}}</td>
+                    <td>{{i.category_2}}</td>
+                    <td>{{i.category_3}}</td>
+                    <td><a href="/itemEdit/{{i.id}}" id="edit">Edit</a></td>
+                    <td><a href="#" id="delete" data-value={{i.id}}>Delete</a></td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+{% else %}
+    <p> There is no item<p>
+    <a href="{{url_for('newItem', vendor_id = vendor )}}">
+        <button>Create New Item</button>
+    </a>
+{% endif %}
+<script type="text/javascript">
+    //$('#delete').onclick(function () {
+    $(document).on('click', '#delete', function(e) {        
+        e.preventDefault();
+        var item_id = $(this).data("value");
+        $.ajax({
+            type: 'POST',
+            url: '/itemDelete/'+item_id,
+            data: item_id,
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                if (result['deleted'] == 'pass') {
+                    window.location.href = "/";
+                }
+                else {
+                    $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+                }
+            }
+        });
+    })
+</script>
+{% endblock %}
