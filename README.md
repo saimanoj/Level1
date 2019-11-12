@@ -16,4 +16,4 @@ $ python vendor.py
 ```
 Open the browser and go to http://localhost:5000
 
-login with same username and password : user1 (or) user2 (or) user3 
+login with same username and password : user1 (or) user2 (or) user3

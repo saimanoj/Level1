@@ -37,7 +37,7 @@ def login_required(f):
             return f(*args, **kwargs)
         else:
             flash("You are not allowed to access there")
-            return redirect('/login')
+            return redirect(url_for('showLogin'))
     return decorated_function
 
 @app.route('/login')
@@ -78,16 +78,16 @@ def logout():
     del login_session['user_id']
     return redirect(url_for('showLogin'))
 
-@login_required
 @app.route('/vendor/<int:vendor_id>/')
+@login_required
 def showVendor(vendor_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     vendor_items = session.query(Item).filter_by(user_id=vendor_id).all()
     return render_template('item.html', items=vendor_items, vendor=vendor_id)
 
-@login_required
 @app.route('/vendor/<int:vendor_id>/newItem', methods=['GET', 'POST'])
+@login_required
 def newItem(vendor_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
@@ -111,8 +111,8 @@ def newItem(vendor_id):
     else:
         return render_template('item_new.html', vendor=vendor_id)
 
-@login_required
 @app.route('/itemEdit/<int:item_id>', methods=['GET', 'POST'])
+@login_required
 def editItem(item_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
@@ -142,8 +142,8 @@ def editItem(item_id):
                                vendor=vendor_id,
                                item=item)    
 
-@login_required
 @app.route('/itemDelete/<int:item_id>', methods=['GET', 'POST'])
+@login_required
 def deleteItem(item_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
