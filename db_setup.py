@@ -79,5 +79,32 @@ class Order(Base):
             'delivery_time':self.delivery_time
         }    
 
+
+class Product(Base):
+    __tablename__ = 'product'
+
+    id                = Column(Integer, primary_key=True)
+    product_id        = Column(String(250), nullable=False)
+    product_code      = Column(String(250), nullable=False)
+    composition       = Column(String(250))
+    color             = Column(String(250))
+    pattern           = Column(String(250))
+    weave             = Column(String(250))
+    image_link        = Column(String(250))
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'id': self.id,
+            'product_id':self.product_id,
+            'product_code': self.product_code,
+            'composition':self.composition,
+            'color':self.color,
+            'pattern':self.pattern,
+            'weave':self.weave,
+            'image_link':self.image_link,
+        }
+
 engine = create_engine('sqlite:///fm.db')
 Base.metadata.create_all(engine)

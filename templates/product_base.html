@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <!-- CSS Framework: http://getskeleton.com/ -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <title>Collections</title>
+</head>
+<body>
+    <header class="toolbar">
+        <h1 class="text-center"><a href="/">Fabric Monde</a></h1>
+    </header>
+    <main role="main">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                {% for message in messages %}
+                        <li> <strong> {{ message }} </strong> </li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+        {% endwith %}
+        <section class="jumbotron text-center">
+            <div class="container">
+              <h1 class="jumbotron-heading">Collections</h1>
+              <p class="lead text-muted">One stop shop for all your fabric needs</p>
+              <p>13622+ product available</p>
+            </div>
+        </section>                 
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="sidebar-sticky">
+                            <ul class="nav flex-column">
+                                <h6>Composition</h6>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/filter/comp_cotton" data-value="comp_cotton" id="nav_a">
+                                        Cotton
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/filter/comp_silk" data-value="comp_silk" id="nav_a">
+                                        Silk
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/filter/comp_denim"  data-value="comp_denim" id="nav_a">
+                                        Denim
+                                    </a>
+                                </li>
+                                <h6>Color</h6>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/filter/color_white" data-value="color_white" id="nav_a">
+                                        White
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/filter/color_blue" data-value="color_blue" id="nav_a">
+                                        Blue
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/filter/color_green" data-value="color_green" id="nav_a">
+                                        Green
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/filter/color_purple"  data-value="color_purple" id="nav_a">
+                                        Purple
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/filter/color_black" data-value="color_black" id="nav_a">
+                                        Black
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/filter/color_beige" data-value="color_beige" id="nav_a">
+                                        Beige
+                                    </a>
+                                </li>
+                                <h6>Pattern</h6>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/filter/pat_solid" data-value="pat_solid" id="nav_a">
+                                        Solid
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/filter/pat_stripes" data-value="pat_stripes" id="nav_a">
+                                        Stripes
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/filter/pat_blocks" data-value="pat_blocks" id="nav_a">
+                                        Blocks
+                                    </a>
+                                </li>                                
+                                <h6>Weave</h6>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/filter/wev_plain" data-value="wev_plain" id="nav_a">
+                                        Plain
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>                    
+                    </div>
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -14,7 +14,8 @@ Launch application
 ```
 $ python fm.py
 ```
-for level 1 use http://localhost:5000/vendor
-for level 2 use http://localhost:5000/orders
+for level 1 open http://localhost:5000/vendor
+for level 2 open http://localhost:5000/orders
+for level 3 open http://localhost:5000
 
 login with same username and password : user1 (or) user2 (or) user3

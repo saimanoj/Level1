@@ -1,0 +1,21 @@
+{% extends "product_base.html" %}
+{% block content %}
+<div class="col-md-9 row">
+    {% for i in items %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <img src="{{i.image_link}}" width="100%" height="225">
+                <div class="card-body">
+                    <p class="card-text">{{i.composition}}</p>
+                    <p>{{i.color}}</p>
+                    <p>{{i.pattern}}</p>
+                    <p>{{i.weave}}</p>
+                    <div class="float-right">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

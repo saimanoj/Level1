@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker
 
 from functools import wraps
 
-from db_setup import Base, User, Item, Order
+from db_setup import Base, User, Item, Order, Product
 
 import json
 import requests
@@ -183,7 +183,6 @@ def downloadItem(vendor_id):
         data += '\n'
     return {'download': 'pass', 'data' : data}
 
-
 def minutesToText(mins):
     days = mins//1440
     hours = (mins - days*1440)//60
@@ -223,6 +222,35 @@ def showOrders():
             total_time += (15*24*60)
         order.delivery_time = minutesToText(total_time)
     return render_template('orders.html', items=order_items)
+
+@app.route('/')
+def product():
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+    product_items = session.query(Product).all()
+    return render_template('product.html', items = product_items)
+
+@app.route('/filter/<string:filter_key>', methods=['GET','POST'])
+def filterProduct(filter_key):
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+    filter_key_split = filter_key.split('_')
+    prod_filter = filter_key_split[0]
+    filter_item = filter_key_split[1]
+    print prod_filter
+    print filter_item
+    if prod_filter == 'comp':
+        product_items = session.query(Product).filter(Product.composition.contains(filter_item)).all()
+    elif prod_filter == 'color':
+        product_items = session.query(Product).filter(Product.color.contains(filter_item)).all()
+    elif prod_filter == 'pat':
+        product_items = session.query(Product).filter(Product.pattern.contains(filter_item)).all()
+    elif prod_filter == 'wev':
+        product_items = session.query(Product).filter(Product.weave.contains(filter_item)).all()
+    else:
+        product_items = session.query(Product).all()
+
+    return render_template('product.html', items = product_items)    
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'

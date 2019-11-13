@@ -2,7 +2,7 @@ import csv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from db_setup import User, Item, Order, Base
+from db_setup import User, Item, Order, Product, Base
 
 engine = create_engine('sqlite:///fm.db')
 # Bind the engine to the metadata of the Base class so that the
@@ -64,5 +64,21 @@ with open(filename, 'r') as csvfile:
 for row in rows[1:]:
 	order = Order(order_id=row[0], product_code=row[1], order_type=row[2], delivery_distance=row[3], 
 					delivery_time=row[4])
+	session.add(order)
+	session.commit()
+
+filename = "test3.csv"
+
+rows = [] 
+  
+with open(filename, 'r') as csvfile: 
+    csvreader = csv.reader(csvfile) 
+  
+    for row in csvreader: 
+        rows.append(row) 
+
+for row in rows:
+	order = Product(product_id=row[0], product_code=row[1], composition=row[2], color=row[3], 
+					pattern=row[4],weave=row[5],image_link=row[6])
 	session.add(order)
 	session.commit()
