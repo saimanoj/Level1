@@ -12,8 +12,9 @@ $ python db_items.py
 ```
 Launch application
 ```
-$ python vendor.py
+$ python fm.py
 ```
-Open the browser and go to http://localhost:5000
+for level 1 use http://localhost:5000/vendor
+for level 2 use http://localhost:5000/orders
 
 login with same username and password : user1 (or) user2 (or) user3

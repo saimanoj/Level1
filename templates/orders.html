@@ -1,0 +1,32 @@
+{% extends "order_base.html" %}
+{% block content %}
+{% if items !=[] %}
+    <div style="margin-top: 40px">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Order ID</th>
+              <th scope="col">Product Code</th>
+              <th scope="col">Type</th>
+              <th scope="col">Distance</th>
+              <th scope="col">Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in items %}
+                <tr>
+                    <td>{{i.order_id}}</td>
+                    <td>{{i.product_code}}</td>
+                    <td>{{i.order_type}}</td>
+                    <td>{{i.delivery_distance}}</td>
+                    <td>{{i.delivery_time}}</td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+{% else %}
+    <p> No Orders <p>
+{% endif %}
+
+{% endblock %}

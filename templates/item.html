@@ -4,6 +4,7 @@
     <a href="{{url_for('newItem', vendor_id = vendor )}}">
         <button>Create New Item</button>
     </a>
+    <button id="downloadCsv">Download</button>
     <div style="margin-top: 40px">
         <table class="table">
           <thead>
@@ -55,6 +56,35 @@
             success: function (result) {
                 if (result['deleted'] == 'pass') {
                     window.location.href = "/";
+                }
+                else {
+                    $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+                }
+            }
+        });
+    })
+    const saveData = (function () {
+        const a = document.createElement("a");
+        document.body.appendChild(a);
+        a.style = "display: none";
+        return function (data, fileName) {
+            const blob = new Blob([data], {type: "octet/stream"}),
+                url = window.URL.createObjectURL(blob);
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        };
+    }());    
+    $('#downloadCsv').click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/download/'+{{vendor}},
+            data: {{vendor}},
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                if (result['download'] == 'pass') {
+                    saveData(result['data'],'products.csv');
                 }
                 else {
                     $('#result').html('Failed to make a server-side call. Check your configuration and console.');

@@ -1,0 +1,11 @@
+Order ID,Product Code,Order Type,Delivery Distance,Delivery Time
+1,SSQ1PL009,swatch,1400 km,
+2,SSQ1PL010,sample,1000 km,
+3,SSQ1PL011,sample,2400 km,
+4,SSQ1PL012,swatch,64000 m,
+5,SSQ1PL013,swatch,15000 km,
+6,SSQ1PL014,bulk,1400 km,
+7,SSQ1PL015,swatch,90000 m,
+8,SSQ1PL016,bulk,1400 km,
+9,SSQ1PL017,bulk,1400 km,
+10,SSQ1PL018,bulk,20000 km,

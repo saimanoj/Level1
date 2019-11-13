@@ -1,3 +1,4 @@
+from __future__ import division
 from flask import (Flask,
                    render_template,
                    request,
@@ -12,7 +13,7 @@ from sqlalchemy.orm import sessionmaker
 
 from functools import wraps
 
-from db_setup import Base, User, Item
+from db_setup import Base, User, Item, Order
 
 import json
 import requests
@@ -41,7 +42,7 @@ def login_required(f):
     return decorated_function
 
 @app.route('/login')
-@app.route('/')
+@app.route('/vendor')
 def showLogin():
     ''' page to login'''
     if 'username' in login_session:
@@ -163,6 +164,65 @@ def deleteItem(item_id):
     else:
         return {'deleted': 'fail'}
 
+@app.route('/download/<int:vendor_id>/', methods=['GET','POST'])
+@login_required
+def downloadItem(vendor_id):
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+    vendor_items = session.query(Item).filter_by(user_id=vendor_id).all()
+    data = 'Product ID,Product Name,Weave,Composition,Color,Category 1,Category 2,Category 3\n'
+    for item in vendor_items:
+        data += str(item.product_id)+','
+        data += str(item.product_name)+','
+        data += '"'+str(item.weave)+'",'
+        data += '"'+str(item.composition)+'",'
+        data += '"'+str(item.color)+'",'
+        data += '"'+str(item.category_1)+'",'
+        data += '"'+str(item.category_2)+'",'
+        data += '"'+str(item.category_3)+'"'
+        data += '\n'
+    return {'download': 'pass', 'data' : data}
+
+
+def minutesToText(mins):
+    days = mins//1440
+    hours = (mins - days*1440)//60
+    minutes = mins - days*1440 - hours*60
+    result = ("{0} day{1}".format(days, "s" if days!=1 else "") if days else "") + \
+    (", {0} hour{1}".format(hours, "s" if hours!=1 else "") if hours else "") + \
+    (", {0} minute{1}".format(minutes, "s" if minutes!=1 else "") if minutes else "")
+    return result
+
+@app.route('/orders')
+def showOrders():
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+    order_items = session.query(Order).all()
+    for order in order_items:
+        r_distance = order.delivery_distance.split(' ')
+        distance = int(r_distance[0])
+        if r_distance[1] == 'm':
+            distance /= 1000
+        if distance > 2000:
+            if distance > 5000:
+                total_time = distance
+            else:
+                r_int = random.randint(0,100)
+                if r_int%2 == 0:
+                    total_time = distance
+                else:
+                    total_time = int((distance/5) * 60)
+        elif distance < 2000:
+            total_time = int((distance/5) * 60)
+        order_type = order.order_type
+        if order_type == 'swatch':
+            total_time += (24*60)
+        elif order_type == 'sample':
+            total_time += (3*24*60)
+        elif order_type == 'bulk':
+            total_time += (15*24*60)
+        order.delivery_time = minutesToText(total_time)
+    return render_template('orders.html', items=order_items)
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'

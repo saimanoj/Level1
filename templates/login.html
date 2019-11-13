@@ -34,12 +34,12 @@
                     if (result['login'] == 'pass') {
                         $('#result').html('Login Successful!</br>Redirecting...');
                         setTimeout(function () {
-                            window.location.href = "/";
+                            window.location.href = "/vendor";
                         }, 1000);
                     } else if(result['login'] == 'fail') {
                         $('#result').html('Login failed!</br> please try again </br>Redirecting...');
                         setTimeout(function () {
-                            window.location.href = "/";
+                            window.location.href = "/vendor";
                         }, 2000);
                     }
                     else {

@@ -57,6 +57,27 @@ class Item(Base):
         }
 
 
+class Order(Base):
+    __tablename__ = 'order'
+
+    id = Column(Integer, primary_key=True)
+    order_id        = Column(String(250), nullable=False)
+    product_code    = Column(String(250), nullable=False)
+    order_type      = Column(String(250))
+    delivery_distance     = Column(String(250))
+    delivery_time   = Column(String(250))
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'id': self.id,
+            'order_id':self.order_id,
+            'product_code': self.product_code,
+            'order_type':self.order_type,
+            'delivery_distance':self.delivery_distance,
+            'delivery_time':self.delivery_time
+        }    
 
 engine = create_engine('sqlite:///fm.db')
 Base.metadata.create_all(engine)
